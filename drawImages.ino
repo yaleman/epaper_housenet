@@ -25,9 +25,9 @@ uint8_t done;
 
 HTTPClient http;
 
-const uint32_t SCREEN_WIDTH = 960;
-const uint32_t SCREEN_HEIGHT = 540;
-const uint32_t SCREEN_PIXELS = SCREEN_WIDTH * SCREEN_HEIGHT;
+// const uint32_t EPD_WIDTH = 960;
+// const uint32_t SCREEN_HEIGHT = 540;
+const uint32_t SCREEN_PIXELS = EPD_WIDTH * EPD_HEIGHT;
 
 
 void setup()
@@ -105,7 +105,7 @@ void loop()
     //     .height =  pic1_height
     // };
 
-    uint8_t pic_data[SCREEN_PIXELS] = {};
+    // uint8_t pic_data[SCREEN_PIXELS] = {};
 
 
     Serial.println("Hello there, booting up!");
@@ -116,9 +116,9 @@ void loop()
     int httpCode = http.GET();
     if (httpCode > 0) { //Check for the returning code
 
-        WiFiClient stream = http.getStream();
         Serial.println("Reading bytes");
-        stream.readBytes(pic_data, SCREEN_PIXELS);
+        // WiFiClient stream = http.getStream();
+        // stream.readBytes(pic_data, SCREEN_PIXELS);
         Serial.println("Done!");
 
         // String payload = http.getString();
@@ -140,16 +140,16 @@ void loop()
 
         done = 1;
     }
-    Rect_t image = {
-        .x = 0,
-        .y = 0,
-        .width = SCREEN_WIDTH,
-        .height = SCREEN_HEIGHT
-    };
-    Serial.println("Copying to framebuffer");
-    epd_copy_to_framebuffer(image, (uint8_t *) pic_data, framebuffer);
-    Serial.println("Updating screen...");
-    update(REFRESH_DELAY);
+    // Rect_t image = {
+    //     .x = 0,
+    //     .y = 0,
+    //     .width = EPD_WIDTH,
+    //     .height = EPD_HEIGHT
+    // };
+    // Serial.println("Copying to framebuffer");
+    // epd_copy_to_framebuffer(image, (uint8_t *) pic_data, framebuffer);
+    // Serial.println("Updating screen...");
+    // update(REFRESH_DELAY);
     Serial.println("Done updating screen...");
 
     // update(3000);
