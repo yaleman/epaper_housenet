@@ -12,7 +12,7 @@
 #include <HTTPClient.h> // https://github.com/amcewen/HttpClient
 
 // #include <AddrList.h>
-#include <lwip/dns.h>
+// #include <lwip/dns.h>
 
 #include "config.h"
 // #include "pic1.h"
@@ -20,14 +20,14 @@
 // #include "pic3.h"
 
 uint8_t *framebuffer;
-
 uint8_t done;
-
 HTTPClient http;
 
 // const uint32_t EPD_WIDTH = 960;
 // const uint32_t SCREEN_HEIGHT = 540;
 const uint32_t SCREEN_PIXELS = EPD_WIDTH * EPD_HEIGHT;
+
+
 
 
 void setup()
@@ -40,14 +40,12 @@ void setup()
     memset(framebuffer, 0xFF, EPD_WIDTH * EPD_HEIGHT / 2);
     done = 0;
 
-    // connectToNetwork();
+    connectToNetwork();
 
     Serial.println(WiFi.macAddress());
     Serial.println(WiFi.localIP());
     // WiFi.disconnect(true);
     // Serial.println(WiFi.localIP());
-
-    connectToNetwork();
 
 }
 
@@ -77,6 +75,8 @@ void connectToNetwork() {
 
     Serial.print("IPv6 Address: ");
     Serial.println(WiFi.localIPv6());
+
+    Serial.println("Hello there, booting up!");
 
 }
 
@@ -108,8 +108,6 @@ void loop()
     // uint8_t pic_data[SCREEN_PIXELS] = {};
 
 
-    Serial.println("Hello there, booting up!");
-
     Serial.print("Grabbing URL: ");
     Serial.println(IMAGE_URL);
     http.begin(IMAGE_URL);
@@ -117,7 +115,7 @@ void loop()
     if (httpCode > 0) { //Check for the returning code
 
         Serial.println("Reading bytes");
-        // WiFiClient stream = http.getStream();
+        WiFiClient stream = http.getStream();
         // stream.readBytes(pic_data, SCREEN_PIXELS);
         Serial.println("Done!");
 
